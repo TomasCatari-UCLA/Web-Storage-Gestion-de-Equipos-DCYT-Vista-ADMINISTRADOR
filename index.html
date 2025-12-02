@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GESTION DE EQUIPOS DCYT-VISTA ADMINISTRADOR</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título de la página y de la vista previa (WhatsApp) -->
+    <title>GESTION EQUIPOS DCYT-VISTA ADMINISTRADOR</title>
+    <meta property="og:title" content="GESTION EQUIPOS DCYT-VISTA ADMINISTRADOR" />
+    <!-- Descripción corta y atractiva -->
+    <meta property="og:description" content="GESTION DE EQUIPOS UCLA-DCyT-VISTA ADMINISTRADOR " />
+    <!-- Imagen que se muestra en WhatsApp (logo o imagen destacada, 800x418 px recomendado) -->
+    <meta property="og:image" content="https://gestion-de-equipos-dcyt-vista-usuar.vercel.app/resource/logo.png" />
+    <!-- URL del proyecto -->
+    <meta property="og:url" content="https://gestion-de-equipos-dcyt-vista-usuar.vercel.app/" />
+    <!-- Tipo de contenido -->
+    <meta property="og:type" content="website" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./resource/favicon.png">
+</head>
+<body>
+
+    <div id="app-container">
+        <header>
+            <h2>GESTION DE EQUIPOS<br>DCYT (ADMINISTRADOR)</h2>
+        </header>
+
+        <section id="dcyt">
+            <div class="stats-card">
+                <div class="stat-row"><span class="txt-blue">Equipos Registrados:</span><span class="txt-blue" id="lblTotal">0</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat-row"><span class="txt-green">Equipos Operativos:</span><span class="txt-green" id="lblOperativos">0</span></div>
+                <div class="stat-row"><span class="txt-yellow">Equipos en Mantenimiento:</span><span class="txt-yellow" id="lblReparacion">0</span></div>
+                <div class="stat-row"><span class="txt-red">Equipos Dañados:</span><span class="txt-red" id="lblDañado">0</span></div>
+            </div>
+            
+            <div class="action-bar">
+                <button id="dcyt_btQuitarFiltro" class="btn-app btn-red" style="display: none;">❌ Dejar de buscar</button>
+                
+                <button id="dcyt_btBuscar" class="btn-app btn-search">🔍 Buscar</button>
+                <button id="dcyt_btAgregar" class="btn-app btn-add">➕ Agregar</button>
+            </div>
+            
+            <div id="dcyt_divTabla"></div>
+        </section>
+
+        <section id="equipo" style="display: none;">
+            <div class="formulario-card">
+                <h2 class="form-title" id="equipo_lblTitulo">Gestión de Equipo</h2>
+                
+                <div class="form-group">
+                    <label>Laboratorio</label>
+                    <select id="equipo_slLab"></select>
+                </div>
+                <div class="form-group">
+                    <label>Serial</label>
+                    <input type="text" id="equipo_inSerial" placeholder="Ej: CP-001">
+                </div>
+                <div class="form-group">
+                    <label>CPU</label>
+                    <input type="text" id="equipo_inCpu" placeholder="Intel i3">
+                </div>
+                <div class="form-group">
+                    <label>RAM (GB)</label>
+                    <input type="number" id="equipo_inRam" placeholder="Ej: 8">
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="equipo_slEstado"></select>
+                </div>
+                <div class="row">
+                    <div class="form-group half">
+                        <label>Fila</label>
+                        <input type="text" id="equipo_inFila">
+                    </div>
+                    <div class="form-group half">
+                        <label>Puesto</label>
+                        <input type="text" id="equipo_inPuesto">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="equipo_btCancelar" class="btn-app btn-search">Cancelar</button>
+                    <button id="equipo_btAceptar" class="btn-app btn-add">Aceptar</button>
+                    <button id="equipo_btGuardar" class="btn-app btn-add" style="display: none;">Guardar</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="consultar" style="display: none;">
+            <div class="formulario-card" style="border-left: 6px solid #0056b3;">
+                <h2 class="form-title">Consultar Equipo</h2>
+                
+                <div class="card-content" style="margin-bottom: 20px; font-size: 1rem; line-height: 1.6;">
+                    <p><strong>Laboratorio:</strong> <span id="consultar_lblLab"></span></p>
+                    <p><strong>Serial:</strong> <span id="consultar_lblSerial" style="color:#0056b3; font-weight:bold;"></span></p>
+                    <p><strong>CPU:</strong> <span id="consultar_lblCpu"></span></p>
+                    <p><strong>RAM:</strong> <span id="consultar_lblRam"></span> GB</p>
+                    <p><strong>Estado:</strong> <span id="consultar_lblEstado"></span></p>
+                    <div class="stat-divider"></div>
+                    <p><strong>Ubicación:</strong> Fila <span id="consultar_lblFila"></span> - Puesto <span id="consultar_lblPuesto"></span></p>
+                </div>
+
+                <div class="form-actions">
+                    <button id="consultar_btVolver" class="btn-app btn-search" style="width: 100%;">Volver</button>
+                </div>
+            </div>
+        </section>
+
+        <footer>UCLA - Barquisimeto - Venezuela</footer>
+    </div>
+
+    <div id="modalEliminar" class="modal-overlay" style="display: none;">
+        <div class="modal-confirm-box">
+            <div class="modal-icon">⚠️</div>
+            <h3>Confirmar</h3>
+            <p>¿Está seguro de eliminar este equipo?</p>
+            <div class="modal-buttons-row">
+                <button id="btConfirmarNo" class="btn-grey">No</button>
+                <button id="btConfirmarSi" class="btn-red">Sí</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalBuscar" class="modal-overlay" style="display: none;">
+        <div class="modal-confirm-box" style="text-align: left; max-width: 350px;">
+            <h3 style="margin-bottom: 15px;">Búsqueda Avanzada</h3>
+            
+            <div style="max-height: 400px; overflow-y: auto; padding-right:5px;">
+                <div class="form-group"><label>Serial:</label><input type="text" id="bus_inSerial"></div>
+                <div class="form-group"><label>Laboratorio:</label><select id="bus_slLab"></select></div>
+                <div class="form-group"><label>CPU:</label><input type="text" id="bus_inCpu"></div>
+                <div class="form-group"><label>RAM:</label><input type="number" id="bus_inRam"></div>
+                <div class="form-group"><label>Estado:</label><select id="bus_slEstado"></select></div>
+                <div class="row">
+                    <div class="form-group half"><label>Fila:</label><input type="text" id="bus_inFila"></div>
+                    <div class="form-group half"><label>Puesto:</label><input type="text" id="bus_inPuesto"></div>
+                </div>
+            </div>
+
+            <div class="modal-buttons-row" style="margin-top: 15px;">
+                <button id="btBuscarCancelar" class="btn-grey">Cancelar</button>
+                <button id="btBuscarAceptar" class="btn-app btn-add">Buscar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import Cl_index from "./dist/Cl_index.js";
+        new Cl_index();
+    </script>
+</body>
+</html>
