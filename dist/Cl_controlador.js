@@ -4,13 +4,13 @@ export default class Cl_controlador {
         this.vista = vista;
     }
     // --- CRUD --- edit,read, add, delete
-    addEquipo({ dtEquipo, callback }) {
+    addEquipo({ dtEquipo, callback, }) {
         this.modelo.addEquipo({ dtEquipo, callback });
     }
-    editEquipo({ dtEquipo, callback }) {
+    editEquipo({ dtEquipo, callback, }) {
         this.modelo.editEquipo({ dtEquipo, callback });
     }
-    deleteEquipo({ serial, callback }) {
+    deleteEquipo({ serial, callback, }) {
         this.modelo.deleteEquipo({ serial, callback });
     }
     // --- CONSULTAS ---
@@ -32,7 +32,7 @@ export default class Cl_controlador {
         return dtEquipos;
     }
     // --- NAVEGACIÓN ---
-    activarVista({ vista, opcion, objeto }) {
+    activarVista({ vista, opcion, objeto, }) {
         this.vista.activarVista({ vista, opcion, objeto });
     }
 }
